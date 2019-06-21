@@ -31,7 +31,9 @@ namespace EsclScannerTest
             var statusProvider = new StatusProvider(client, "192.168.0.151");
             var status = await statusProvider.GetStatus();
 
-            Assert.Equal("Idle", status);
+            Assert.NotNull(status);
+            Assert.Equal("Idle", status.Value.State);
+            Assert.Equal("2.63", status.Value.Version);
         }
 
         [Fact]
@@ -46,7 +48,7 @@ namespace EsclScannerTest
             var statusProvider = new StatusProvider(client, "192.168.0.151");
             var status = await statusProvider.GetStatus();
 
-            Assert.Equal("Unsuccess status code", status);
+            Assert.Null(status);
         }
     }
 }
