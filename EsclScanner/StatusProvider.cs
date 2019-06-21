@@ -7,7 +7,6 @@ namespace EsclScanner
     public class StatusProvider
     {
         public static readonly string STATUS_URI_PATTERN = "http://{0}/eSCL/ScannerStatus";
-        public static readonly string UNSUCCESS_STATUS_CODE = "Unsuccess status code";
 
         private IEsclClient esclClient;
         private string endpoint;
@@ -18,13 +17,16 @@ namespace EsclScanner
             this.endpoint = String.Format(STATUS_URI_PATTERN, host);
         }
 
-        public async Task<string> GetStatus()
+        public async Task<EsclStatus?> GetStatus()
         {
             var response = await esclClient.GetAsync(endpoint);
             if (!response.IsSuccessStatusCode)
-                return UNSUCCESS_STATUS_CODE;
+                return null;
             var content = response.Content;
-            return extractMarkupContent(content, "State");
+            return new EsclStatus{
+                State = extractMarkupContent(content, "State"),
+                Version = extractMarkupContent(content, "Version"),
+            };
         }
 
         private string extractMarkupContent(string xml, string markup)
