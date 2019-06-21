@@ -7,8 +7,6 @@ namespace EsclScanner
     public class StatusProvider
     {
         public static readonly string STATUS_URI_PATTERN = "http://{0}/eSCL/ScannerStatus";
-        public static readonly string SCAN_NAMESPACE = "http://schemas.hp.com/imaging/escl/2011/05/03";
-        public static readonly string PWG_NAMESPACE = "http://www.pwg.org/schemas/2010/12/sm";
 
         private IEsclClient esclClient;
         private string endpoint;
@@ -27,7 +25,7 @@ namespace EsclScanner
             var content = response.Content;
             var xmlDocument = new XmlDocument();
             xmlDocument.LoadXml(content);
-            var namespaceManager = createNamespaceManager(xmlDocument);
+            var namespaceManager = NamespaceUtils.CreateNamespaceManager(xmlDocument);
             var versionNode = xmlDocument.SelectSingleNode("/scan:ScannerStatus/pwg:Version", namespaceManager);
             var stateNode = xmlDocument.SelectSingleNode("/scan:ScannerStatus/pwg:State", namespaceManager);
 
@@ -35,14 +33,6 @@ namespace EsclScanner
                 State = stateNode.InnerText,
                 Version = versionNode.InnerText
             };
-        }
-
-        private XmlNamespaceManager createNamespaceManager(XmlDocument xmlDocument)
-        {
-            var namespaceManager = new XmlNamespaceManager(xmlDocument.NameTable);
-            namespaceManager.AddNamespace("scan", SCAN_NAMESPACE);
-            namespaceManager.AddNamespace("pwg", PWG_NAMESPACE);
-            return namespaceManager;
         }
     }
 }
