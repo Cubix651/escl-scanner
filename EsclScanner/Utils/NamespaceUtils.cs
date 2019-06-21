@@ -1,6 +1,6 @@
 using System.Xml;
 
-namespace EsclScanner
+namespace Escl.Utils
 {
     public static class NamespaceUtils
     {

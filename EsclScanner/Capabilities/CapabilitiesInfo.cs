@@ -1,4 +1,4 @@
-namespace EsclScanner
+namespace Escl.Capabilities
 {
     public struct CapabilitiesInfo
     {

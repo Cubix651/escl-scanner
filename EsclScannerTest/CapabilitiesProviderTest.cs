@@ -1,8 +1,8 @@
-using System;
 using Xunit;
 using FakeItEasy;
-using EsclScanner;
 using System.Threading.Tasks;
+using Escl.Connection;
+using Escl.Capabilities;
 
 namespace EsclScannerTest
 {

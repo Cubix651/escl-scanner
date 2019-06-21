@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using System.Net.Http;
 
-namespace EsclScanner
+namespace Escl.Connection
 {
     public class EsclClient : IEsclClient
     {

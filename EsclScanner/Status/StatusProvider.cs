@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Xml;
+using Escl.Connection;
+using Escl.Utils;
 
-namespace EsclScanner
+namespace Escl.Status
 {
     public class StatusProvider
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace EsclScanner
+namespace Escl.Connection
 {
     public interface IEsclResponse
     {

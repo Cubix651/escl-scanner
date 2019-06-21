@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Xml;
+using Escl.Connection;
 
-namespace EsclScanner
+namespace Escl.Capabilities
 {
     public class CapabilitiesProvider
     {

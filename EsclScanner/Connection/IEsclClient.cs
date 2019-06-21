@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace EsclScanner
+namespace Escl.Connection
 {
     public interface IEsclClient
     {

@@ -1,4 +1,4 @@
-namespace EsclScanner
+namespace Escl.Status
 {
     public struct EsclStatus
     {

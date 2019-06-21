@@ -1,6 +1,8 @@
+using Escl.Connection;
+using Escl.Requests;
 using System.Threading.Tasks;
 
-namespace EsclScanner
+namespace Escl.Jobs
 {
     public class EsclJobCreator
     {

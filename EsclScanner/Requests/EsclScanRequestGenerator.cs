@@ -1,4 +1,4 @@
-namespace EsclScanner
+namespace Escl.Requests
 {
     public class EsclScanRequestGenerator
     {

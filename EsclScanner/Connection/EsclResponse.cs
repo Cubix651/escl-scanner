@@ -1,7 +1,7 @@
 using System;
 using System.Net.Http;
 
-namespace EsclScanner
+namespace Escl.Connection
 {
     public class EsclResponse : IEsclResponse
     {
