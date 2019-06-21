@@ -24,12 +24,12 @@ namespace EsclScanner
             if (!response.IsSuccessStatusCode)
                 return UNSUCCESS_STATUS_CODE;
             var content = response.Content;
-            return extractStateMarkupContent(content);
+            return extractMarkupContent(content, "State");
         }
 
-        private string extractStateMarkupContent(string xml)
+        private string extractMarkupContent(string xml, string markup)
         {
-            int startPosition = xml.IndexOf("State");
+            int startPosition = xml.IndexOf(markup);
             int from = xml.IndexOf(">", startPosition) + 1;
             int to = xml.IndexOf("<", from);
             return xml.Substring(from, to-from);
