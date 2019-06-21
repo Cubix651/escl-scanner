@@ -17,5 +17,12 @@ namespace EsclScanner
             var response = await httpClient.GetAsync(uri);
             return new EsclResponse(response);
         }
+
+        public async Task<IEsclResponse> PostAsync(string uri, string body)
+        {
+            var content = new StringContent(body);
+            var response = await httpClient.PostAsync(uri, content);
+            return new EsclResponse(response);
+        }
     }
 }
