@@ -6,5 +6,6 @@ namespace EsclScanner
     {
          bool IsSuccessStatusCode {get;}
          string Content {get;}
+         Uri LocationHeader {get;}
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 
 namespace EsclScanner
@@ -22,5 +23,8 @@ namespace EsclScanner
                 return content;
             }
         }
+
+        public Uri LocationHeader => response.Headers.Location;
+        
     }
 }
