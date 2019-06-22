@@ -22,11 +22,7 @@ namespace Escl.Status
         public async Task<EsclStatus?> GetStatus()
         {
             var response = await esclClient.GetAsync(endpoint);
-            if (!response.IsSuccessStatusCode)
-                return null;
-            var content = response.Content;
-            var xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml(content);
+            var xmlDocument = response.Content;
             var namespaceManager = NamespaceUtils.CreateNamespaceManager(xmlDocument);
             var versionNode = xmlDocument.SelectSingleNode("/scan:ScannerStatus/pwg:Version", namespaceManager);
             var stateNode = xmlDocument.SelectSingleNode("/scan:ScannerStatus/pwg:State", namespaceManager);

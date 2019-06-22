@@ -21,11 +21,6 @@ namespace Escl.Capabilities
         public async Task<CapabilitiesInfo?> GetCapabilities()
         {
             var response = await esclClient.GetAsync(endpoint);
-            if (!response.IsSuccessStatusCode)
-                return null;
-            var content = response.Content;
-            var xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml(content);
             return null;
         }
     }
