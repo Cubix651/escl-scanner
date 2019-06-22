@@ -1,13 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using Escl.Utils;
 using Escl.Connection;
+using System;
+using System.Threading.Tasks;
 
 namespace Escl.Capabilities
 {
     public class CapabilitiesProvider
     {
-        public static readonly string CAPABILITIES_URI_PATTERN = "http://{0}/eSCL/ScannerStatus";
+        public static readonly string CAPABILITIES_URI_PATTERN = "http://{0}/eSCL/ScannerCapabilities";
 
         private IEsclClient esclClient;
         private string endpoint;
@@ -21,7 +21,12 @@ namespace Escl.Capabilities
         public async Task<CapabilitiesInfo?> GetCapabilities()
         {
             var response = await esclClient.GetAsync(endpoint);
-            return null;
+            var xml = response.Content;
+            var namespaceManager = NamespaceUtils.CreateNamespaceManager(xml);
+            var modelNode = xml.SelectSingleNode("/scan:ScannerCapabilities/pwg:MakeAndModel",
+                                                 namespaceManager);
+            string model = modelNode?.InnerText;
+            return new CapabilitiesInfo { Model = model };
         }
     }
 }
