@@ -1,30 +1,21 @@
 using System;
-using System.Net.Http;
+using System.Xml;
 
 namespace Escl.Connection
 {
-    public class EsclResponse : IEsclResponse
+    public struct EsclResponse : IEsclResponse
     {
-        HttpResponseMessage response;
-        string content = null;
-
-        public EsclResponse(HttpResponseMessage response)
+        public EsclResponse(XmlDocument content, Uri location)
         {
-            this.response = response;
+            this.Content = content;
+            this.Location = location;
         }
-        public bool IsSuccessStatusCode => response.IsSuccessStatusCode;
+        public EsclResponse(XmlDocument content) : this (content, null)
+        { }
 
-        public string Content
-        {
-            get
-            {
-                if (content == null)
-                    content = response.Content.ReadAsStringAsync().Result;
-                return content;
-            }
-        }
+        public XmlDocument Content {get; }
 
-        public Uri LocationHeader => response.Headers.Location;
+        public Uri Location {get; }
         
     }
 }

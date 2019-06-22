@@ -1,5 +1,6 @@
-using System.Threading.Tasks;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Xml;
 
 namespace Escl.Connection
 {
@@ -15,14 +16,26 @@ namespace Escl.Connection
         public async Task<IEsclResponse> GetAsync(string uri)
         {
             var response = await httpClient.GetAsync(uri);
-            return new EsclResponse(response);
+            var xml = await readResponseAsync(response);
+            return new EsclResponse(content: xml);
         }
 
         public async Task<IEsclResponse> PostAsync(string uri, string body)
         {
             var content = new StringContent(body);
             var response = await httpClient.PostAsync(uri, content);
-            return new EsclResponse(response);
+            var xml = await readResponseAsync(response);
+            return new EsclResponse(content: xml, location: response.Headers.Location);
+        }
+
+        private async Task<XmlDocument> readResponseAsync(HttpResponseMessage response)
+        {
+            if (!response.IsSuccessStatusCode)
+                return null;
+            var xmlStreamTask = response.Content.ReadAsStreamAsync();
+            var xmlDocument = new XmlDocument();
+            xmlDocument.Load(await xmlStreamTask);
+            return xmlDocument;
         }
     }
 }

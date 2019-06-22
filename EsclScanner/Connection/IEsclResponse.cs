@@ -1,11 +1,11 @@
 using System;
+using System.Xml;
 
 namespace Escl.Connection
 {
     public interface IEsclResponse
     {
-         bool IsSuccessStatusCode {get;}
-         string Content {get;}
-         Uri LocationHeader {get;}
+         XmlDocument Content {get;}
+         Uri Location {get;}
     }
 }
