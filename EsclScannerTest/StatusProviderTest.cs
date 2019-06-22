@@ -1,8 +1,9 @@
-using Xunit;
+using Escl.Connection;
+using Escl.Status;
 using FakeItEasy;
 using System.Threading.Tasks;
-using Escl.Status;
-using Escl.Connection;
+using System.Xml;
+using Xunit;
 
 namespace EsclScannerTest
 {
@@ -23,12 +24,11 @@ namespace EsclScannerTest
         [Fact]
         public async Task successful_response_with_idle_status()
         {
-            var response = A.Fake<IEsclResponse>();
-            A.CallTo(() => response.IsSuccessStatusCode).Returns(true);
-            A.CallTo(() => response.Content).Returns(FULL_RESPONSE_BODY);
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(FULL_RESPONSE_BODY);
             var client = A.Fake<IEsclClient>();
             A.CallTo(() => client.GetAsync("http://192.168.0.151/eSCL/ScannerStatus"))
-                .Returns(Task.FromResult(response));
+                .Returns(Task.FromResult<IEsclResponse>(new EsclResponse(content: responseXml)));
 
             var statusProvider = new StatusProvider(client, "192.168.0.151");
             var status = await statusProvider.GetStatus();
@@ -36,21 +36,6 @@ namespace EsclScannerTest
             Assert.NotNull(status);
             Assert.Equal("Idle", status.Value.State);
             Assert.Equal("2.63", status.Value.Version);
-        }
-
-        [Fact]
-        public async Task not_success_status_code()
-        {
-            var response = A.Fake<IEsclResponse>();
-            A.CallTo(() => response.IsSuccessStatusCode).Returns(false);
-            var client = A.Fake<IEsclClient>();
-            A.CallTo(() => client.GetAsync("http://192.168.0.151/eSCL/ScannerStatus"))
-                .Returns(Task.FromResult(response));
-
-            var statusProvider = new StatusProvider(client, "192.168.0.151");
-            var status = await statusProvider.GetStatus();
-
-            Assert.Null(status);
         }
     }
 }

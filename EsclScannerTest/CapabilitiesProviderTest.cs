@@ -1,6 +1,7 @@
 using Xunit;
 using FakeItEasy;
 using System.Threading.Tasks;
+using System.Xml;
 using Escl.Connection;
 using Escl.Capabilities;
 
@@ -92,12 +93,11 @@ namespace EsclScannerTest
         [Fact]
         public async Task successful_response_with_model_name()
         {
-            var response = A.Fake<IEsclResponse>();
-            A.CallTo(() => response.IsSuccessStatusCode).Returns(true);
-            A.CallTo(() => response.Content).Returns(FULL_RESPONSE_BODY);
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(FULL_RESPONSE_BODY);
             var client = A.Fake<IEsclClient>();
             A.CallTo(() => client.GetAsync("http://192.168.0.151/eSCL/ScannerCapabilities"))
-                .Returns(Task.FromResult(response));
+                .Returns(Task.FromResult<IEsclResponse>(new EsclResponse(content: responseXml)));
 
             var capabilitiesProvider = new CapabilitiesProvider(client, "192.168.0.151");
             var capabilities = await capabilitiesProvider.GetCapabilities();
@@ -109,33 +109,17 @@ namespace EsclScannerTest
         [Fact]
         public async Task successful_response_without_model_name()
         {
-            var response = A.Fake<IEsclResponse>();
-            A.CallTo(() => response.IsSuccessStatusCode).Returns(true);
-            A.CallTo(() => response.Content).Returns(EMPTY_RESPONSE_BODY);
+            var responseXml = new XmlDocument();
+            responseXml.LoadXml(EMPTY_RESPONSE_BODY);
             var client = A.Fake<IEsclClient>();
             A.CallTo(() => client.GetAsync("http://192.168.0.151/eSCL/ScannerCapabilities"))
-                .Returns(Task.FromResult(response));
+                .Returns(Task.FromResult<IEsclResponse>(new EsclResponse(content: responseXml)));
 
             var capabilitiesProvider = new CapabilitiesProvider(client, "192.168.0.151");
             var capabilities = await capabilitiesProvider.GetCapabilities();
 
             Assert.NotNull(capabilities);
             Assert.Null(capabilities.Value.Model);
-        }
-
-        [Fact]
-        public async Task not_success_status_code()
-        {
-            var response = A.Fake<IEsclResponse>();
-            A.CallTo(() => response.IsSuccessStatusCode).Returns(false);
-            var client = A.Fake<IEsclClient>();
-            A.CallTo(() => client.GetAsync("http://192.168.0.151/eSCL/ScannerCapabilities"))
-                .Returns(Task.FromResult(response));
-
-            var capabilitiesProvider = new CapabilitiesProvider(client, "192.168.0.151");
-            var capabilities = await capabilitiesProvider.GetCapabilities();
-
-            Assert.Null(capabilities);
         }
     }
 }
