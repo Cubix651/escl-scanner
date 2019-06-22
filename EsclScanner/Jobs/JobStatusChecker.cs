@@ -10,13 +10,13 @@ namespace Escl.Jobs
 
         IEsclClient esclClient;
         string endpoint;
-        string jobUri;
+        public string Uri {get;}
 
         public JobStatusChecker(IEsclClient esclClient, string host, string jobUri)
         {
             this.esclClient = esclClient;
             this.endpoint = string.Format(STATUS_URI_PATTERN, host);
-            this.jobUri = jobUri;
+            this.Uri = jobUri;
         }
 
         public async Task<bool> Ready()
@@ -25,7 +25,7 @@ namespace Escl.Jobs
             var xmlDocument = response.Content;
             var namespaceManager = NamespaceUtils.CreateNamespaceManager(xmlDocument);
             var jobInfoNode = xmlDocument.SelectSingleNode(
-                $"/scan:ScannerStatus/scan:Jobs/scan:JobInfo[pwg:JobUri = '{jobUri}']",
+                $"/scan:ScannerStatus/scan:Jobs/scan:JobInfo[pwg:JobUri = '{Uri}']",
                 namespaceManager);
             var imagesToTransferNode = jobInfoNode.SelectSingleNode("./pwg:ImagesToTransfer", namespaceManager);
             if (int.Parse(imagesToTransferNode.InnerText) > 0)
