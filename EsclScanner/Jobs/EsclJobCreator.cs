@@ -18,6 +18,7 @@ namespace Escl.Jobs
         {
             this.esclClient = esclClient;
             this.endpoint = string.Format(NEW_JOB_URI_PATTERN, host);
+            this.scanRequestGenerator = scanRequestGenerator;
         }
 
         public async Task<string> CreateJob()
