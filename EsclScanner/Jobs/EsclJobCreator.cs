@@ -24,7 +24,7 @@ namespace Escl.Jobs
         {
             string request = scanRequestGenerator.Generate();
             var response = await esclClient.PostAsync(endpoint, request);
-            return response.LocationHeader.PathAndQuery;
+            return response.Location.PathAndQuery;
         }
         
     }
