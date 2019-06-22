@@ -1,3 +1,4 @@
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
@@ -18,6 +19,12 @@ namespace Escl.Connection
             var response = await httpClient.GetAsync(uri);
             var xml = await readResponseAsync(response);
             return new EsclResponse(content: xml);
+        }
+
+        public async Task<Stream> GetStreamAsync(string uri)
+        {
+            var response = await httpClient.GetAsync(uri);
+            return await response.Content.ReadAsStreamAsync();
         }
 
         public async Task<IEsclResponse> PostAsync(string uri, string body)
