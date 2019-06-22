@@ -24,8 +24,7 @@ namespace Escl.Connection
         {
             var content = new StringContent(body);
             var response = await httpClient.PostAsync(uri, content);
-            var xml = await readResponseAsync(response);
-            return new EsclResponse(content: xml, location: response.Headers.Location);
+            return new EsclResponse(location: response.Headers.Location);
         }
 
         private async Task<XmlDocument> readResponseAsync(HttpResponseMessage response)
