@@ -2,12 +2,14 @@ using System.Threading.Tasks;
 
 namespace Escl.Jobs
 {
-    public class JobMonitor
+    public class EsclJob
     {
         static readonly int DELAY = 2000;
         private JobStatusChecker statusChecker;
 
-        public JobMonitor(JobStatusChecker statusChecker)
+        public string Uri => statusChecker.Uri;
+
+        public EsclJob(JobStatusChecker statusChecker)
         {
             this.statusChecker = statusChecker;
         }

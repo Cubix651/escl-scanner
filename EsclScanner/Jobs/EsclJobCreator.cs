@@ -9,6 +9,7 @@ namespace Escl.Jobs
         public static readonly string NEW_JOB_URI_PATTERN = "http://{0}/eSCL/ScanJobs";
 
         IEsclClient esclClient;
+        string host;
         string endpoint;
         EsclScanRequestGenerator scanRequestGenerator;   
 
@@ -17,15 +18,18 @@ namespace Escl.Jobs
                               EsclScanRequestGenerator scanRequestGenerator)
         {
             this.esclClient = esclClient;
+            this.host = host;
             this.endpoint = string.Format(NEW_JOB_URI_PATTERN, host);
             this.scanRequestGenerator = scanRequestGenerator;
         }
 
-        public async Task<string> CreateJob()
+        public async Task<EsclJob> CreateJob()
         {
             string request = scanRequestGenerator.Generate();
             var response = await esclClient.PostAsync(endpoint, request);
-            return response.Location.PathAndQuery;
+            string jobUri = response.Location.PathAndQuery;
+            var statusChecker = new JobStatusChecker(esclClient, host, jobUri);
+            return new EsclJob(statusChecker);
         }
         
     }
