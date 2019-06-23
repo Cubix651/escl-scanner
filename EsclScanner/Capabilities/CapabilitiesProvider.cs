@@ -18,7 +18,7 @@ namespace Escl.Capabilities
             this.endpoint = String.Format(CAPABILITIES_URI_PATTERN, host);
         }
 
-        public async Task<CapabilitiesInfo?> GetCapabilities()
+        public async Task<CapabilitiesInfo> GetCapabilities()
         {
             var response = await esclClient.GetAsync(endpoint);
             var xml = response.Content;

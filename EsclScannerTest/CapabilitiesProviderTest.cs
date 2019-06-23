@@ -102,8 +102,7 @@ namespace EsclScannerTest
             var capabilitiesProvider = new CapabilitiesProvider(client, "192.168.0.151");
             var capabilities = await capabilitiesProvider.GetCapabilities();
 
-            Assert.NotNull(capabilities);
-            Assert.Equal("HP LaserJet MFP M28w", capabilities.Value.Model);
+            Assert.Equal("HP LaserJet MFP M28w", capabilities.Model);
         }
         
         [Fact]
@@ -118,8 +117,7 @@ namespace EsclScannerTest
             var capabilitiesProvider = new CapabilitiesProvider(client, "192.168.0.151");
             var capabilities = await capabilitiesProvider.GetCapabilities();
 
-            Assert.NotNull(capabilities);
-            Assert.Null(capabilities.Value.Model);
+            Assert.Null(capabilities.Model);
         }
     }
 }
