@@ -19,7 +19,7 @@ namespace Escl.Status
             this.endpoint = String.Format(STATUS_URI_PATTERN, host);
         }
 
-        public async Task<EsclStatus?> GetStatus()
+        public async Task<EsclStatus> GetStatus()
         {
             var response = await esclClient.GetAsync(endpoint);
             var xmlDocument = response.Content;
