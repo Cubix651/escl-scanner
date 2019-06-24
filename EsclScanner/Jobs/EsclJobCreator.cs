@@ -23,9 +23,9 @@ namespace Escl.Jobs
             this.scanRequestGenerator = scanRequestGenerator;
         }
 
-        public async Task<EsclJob> CreateJob()
+        public async Task<EsclJob> CreateJob(ScanOptions options)
         {
-            string request = scanRequestGenerator.Generate();
+            string request = scanRequestGenerator.Generate(options);
             var response = await esclClient.PostAsync(endpoint, request);
             string jobUri = response.Location.PathAndQuery;
             var statusChecker = new JobStatusChecker(esclClient, host, jobUri);

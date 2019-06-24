@@ -28,7 +28,7 @@ namespace Escl
 
         public async Task Scan(ScanOptions options)
         {
-            var job = await jobCreator.CreateJob();
+            var job = await jobCreator.CreateJob(options);
             await job.MonitorAsync();
             var fileFetcher = new EsclFileFetcher(esclClient, Host, job.Uri);
             await fileFetcher.SaveToFile(options.OutputPath);
