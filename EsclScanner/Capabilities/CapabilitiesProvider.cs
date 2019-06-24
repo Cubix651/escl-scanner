@@ -3,6 +3,8 @@ using Escl.Connection;
 using System;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Escl.Capabilities
 {
@@ -36,6 +38,24 @@ namespace Escl.Capabilities
                 return node?.InnerText;
             }
 
+            public int ExtractInt(string xpath, int defaultValue = 0)
+            {
+                var node = xml.SelectSingleNode(xpath, namespaceManager);
+                var valueString = node?.InnerText;
+                return valueString.ParseIntOrDefault(defaultValue);
+            }
+
+            public IEnumerable<XmlNode> ExtractNodes(string xpath)
+            {
+                return xml.SelectNodes(xpath, namespaceManager).Cast<XmlNode>();
+            }
+            
+            public List<string> ExtractList(string xpath)
+            {
+                return ExtractNodes(xpath)
+                    .Select(node => node.InnerText)
+                    .ToList();
+            }
         }
 
         public async Task<CapabilitiesInfo> GetCapabilities()
@@ -47,7 +67,18 @@ namespace Escl.Capabilities
             
             return new CapabilitiesInfo
             {
-                Model = extractor.Extract("/scan:ScannerCapabilities/pwg:MakeAndModel")
+                Model = extractor.Extract("/scan:ScannerCapabilities/pwg:MakeAndModel"),
+                MinWidth = extractor.ExtractInt("/scan:ScannerCapabilities/scan:Platen/scan:PlatenInputCaps/scan:MinWidth"),
+                MaxWidth = extractor.ExtractInt("/scan:ScannerCapabilities/scan:Platen/scan:PlatenInputCaps/scan:MaxWidth"),
+                MinHeight = extractor.ExtractInt("/scan:ScannerCapabilities/scan:Platen/scan:PlatenInputCaps/scan:MinHeight"),
+                MaxHeight = extractor.ExtractInt("/scan:ScannerCapabilities/scan:Platen/scan:PlatenInputCaps/scan:MaxHeight"),
+                DocumentFormatExtensions = extractor.ExtractList("/scan:ScannerCapabilities/scan:Platen/scan:PlatenInputCaps/scan:SettingProfiles/scan:SettingProfile/scan:DocumentFormats/scan:DocumentFormatExt"),
+                Resolutions = 
+                    extractor.ExtractNodes("/scan:ScannerCapabilities/scan:Platen/scan:PlatenInputCaps/scan:SettingProfiles/scan:SettingProfile/scan:SupportedResolutions/scan:DiscreteResolutions/scan:DiscreteResolution")
+                        .Select(node => new Resolution {
+                            X = node.SelectSingleNode("./scan:XResolution", namespaceManager).InnerText.ParseIntOrDefault(0),
+                            Y = node.SelectSingleNode("./scan:YResolution", namespaceManager).InnerText.ParseIntOrDefault(0)
+                            }).ToList()
             };
         }
     }
