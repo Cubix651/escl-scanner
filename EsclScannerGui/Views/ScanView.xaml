@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EsclScannerGui.Views.ScanView">
+  <StackPanel>
+    <TextBox Text="{Binding OutputPath}" Margin="4" Watermark="Path"/>
+    <DropDown Items="{Binding Capabilities.DocumentFormatExtensions}" SelectedItem="{Binding DocumentFormatExt}" Margin="4"/>
+    <DropDown Items="{Binding Capabilities.Resolutions}" SelectedItem="{Binding Resolution}" Margin="4"/>
+    <StackPanel Orientation="Horizontal">
+      <TextBlock Text="Width" VerticalAlignment="Center" Margin="4"/>
+      <NumericUpDown Value="{Binding Width}" Minimum="{Binding Capabilities.MinWidth}" Maximum="{Binding Capabilities.MaxWidth}" Margin="4"/>
+      <TextBlock Text="Height" VerticalAlignment="Center" Margin="4"/>
+      <NumericUpDown Value="{Binding Height}" Minimum="{Binding Capabilities.MinHeight}" Maximum="{Binding Capabilities.MaxHeight}" Margin="4"/>
+      <TextBlock Text="X Offset" VerticalAlignment="Center" Margin="4"/>
+      <NumericUpDown Value="{Binding XOffset}" Margin="4"/>
+      <TextBlock Text="Y Offset" VerticalAlignment="Center" Margin="4"/>
+      <NumericUpDown Value="{Binding YOffset}" Margin="4"/>
+    </StackPanel>
+    <Button Content="Scan" Command="{Binding Scan}" Margin="4"/>
+  </StackPanel>
+</UserControl>
