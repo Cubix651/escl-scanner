@@ -2,6 +2,10 @@
 
 This is an app for easy Wi-Fi scanning from devices providing communication via eSCL protocol (e.g. HP LaserJet Pro MFP M28w).
 
+![](Images/Welcome_screen.png)
+
+![](Images/Scanning.png)
+
 ## References
 
 - https://github.com/petrj/HPWifiScan/
