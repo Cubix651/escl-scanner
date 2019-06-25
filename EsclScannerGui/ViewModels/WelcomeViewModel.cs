@@ -18,11 +18,7 @@ namespace EsclScannerGui.ViewModels
         {
             var scanner = new Scanner(Host);
             var capabilities = await scanner.GetCapabilities();
-            mainWindowViewModel.Content = new ScanViewModel(
-                scanner,
-                capabilities.Resolutions,
-                capabilities.DocumentFormatExtensions
-            );
+            mainWindowViewModel.Content = new ScanViewModel(scanner, capabilities);
         }
     }
 }
