@@ -5,8 +5,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EsclScannerGui.Views.WelcomeView">
   <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-    <TextBlock Text="{Binding WelcomeMessage}"/>
-    <TextBox Watermark="Host, e.g 192.168.0.151" Text="{Binding Host}" />
-    <Button Content="Start tool" Command="{Binding StartTool}"/>
+    <TextBlock Text="{Binding WelcomeMessage}" Margin="4"/>
+    <TextBox Watermark="Host, e.g 192.168.0.151" Text="{Binding Host}" Margin="4"/>
+    <Button Content="Start tool" Command="{Binding StartTool}" Margin="4"/>
   </StackPanel>
 </UserControl>
