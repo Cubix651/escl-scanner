@@ -6,6 +6,7 @@
              x:Class="EsclScannerGui.Views.WelcomeView">
   <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
     <TextBlock Text="{Binding WelcomeMessage}"/>
-    <TextBlock Text="{Binding Description}"/>
+    <TextBox Watermark="Host, e.g 192.168.0.151" Text="{Binding Host}" />
+    <Button Content="Start tool" Command="{Binding StartTool}"/>
   </StackPanel>
 </UserControl>

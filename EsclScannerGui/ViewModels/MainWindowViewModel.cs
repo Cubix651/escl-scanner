@@ -12,12 +12,12 @@ namespace EsclScannerGui.ViewModels
         public ViewModelBase Content
         {
             get => content;
-            private set => this.RaiseAndSetIfChanged(ref content, value);
+            set => this.RaiseAndSetIfChanged(ref content, value);
         }
 
         public MainWindowViewModel()
         {
-            Content = new WelcomeViewModel();
+            Content = new WelcomeViewModel(this);
         }
     }
 }
