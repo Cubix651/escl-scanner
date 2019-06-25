@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EsclScannerGui.Views.WelcomeView">
-  Welcome to eSCL Scan Tool!
-
-  Fetching scanner info...
+  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+    <TextBlock Text="{Binding WelcomeMessage}"/>
+    <TextBlock Text="{Binding Description}"/>
+  </StackPanel>
 </UserControl>
