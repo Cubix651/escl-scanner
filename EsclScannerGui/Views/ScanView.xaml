@@ -5,6 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EsclScannerGui.Views.ScanView">
   <StackPanel>
+    <Image Source="{Binding PreviewImage}" Width="200" Height="200"/>
     <TextBox Text="{Binding OutputPath}" Margin="4" Watermark="Path"/>
     <DropDown Items="{Binding Capabilities.DocumentFormatExtensions}" SelectedItem="{Binding DocumentFormatExt}" Margin="4"/>
     <DropDown Items="{Binding Capabilities.Resolutions}" SelectedItem="{Binding Resolution}" Margin="4"/>
@@ -18,6 +19,7 @@
       <TextBlock Text="Y Offset" VerticalAlignment="Center" Margin="4"/>
       <NumericUpDown Value="{Binding YOffset}" Margin="4"/>
     </StackPanel>
+    <Button Content="Preview" Command="{Binding PreviewAsync}" Margin="4"/>
     <Button Content="Scan" Command="{Binding Scan}" Margin="4"/>
   </StackPanel>
 </UserControl>
