@@ -5,6 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="EsclScannerGui.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
+        Width="600" Height="400"
         Title="Escl Scanner"
         Content="{Binding Content}">
 </Window>
