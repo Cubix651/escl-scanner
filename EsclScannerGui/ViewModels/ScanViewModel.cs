@@ -37,6 +37,7 @@ namespace EsclScannerGui.ViewModels
             Resolution = Capabilities.Resolutions[0];
             Width = capabilities.MaxWidth;
             Height = capabilities.MaxHeight;
+            OutputPath = "scan.jpg";
         }        
 
         public async Task Scan()
