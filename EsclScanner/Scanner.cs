@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using Escl.Capabilities;
 using Escl.Connection;
@@ -32,6 +33,14 @@ namespace Escl
             await job.MonitorAsync();
             var fileFetcher = new EsclFileFetcher(esclClient, Host, job.Uri);
             await fileFetcher.SaveToFile(options.OutputPath);
+        }
+
+        public async Task<Stream> GetPreviewAsync(ScanOptions options)
+        {
+            var job = await jobCreator.CreateJob(options);
+            await job.MonitorAsync();
+            var fileFetcher = new EsclFileFetcher(esclClient, Host, job.Uri);
+            return await fileFetcher.GetStreamAsync();
         }
 
         public async Task<EsclStatus> GetStatus()

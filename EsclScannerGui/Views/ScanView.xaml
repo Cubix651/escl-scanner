@@ -4,20 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EsclScannerGui.Views.ScanView">
-  <StackPanel>
-    <TextBox Text="{Binding OutputPath}" Margin="4" Watermark="Path"/>
-    <DropDown Items="{Binding Capabilities.DocumentFormatExtensions}" SelectedItem="{Binding DocumentFormatExt}" Margin="4"/>
-    <DropDown Items="{Binding Capabilities.Resolutions}" SelectedItem="{Binding Resolution}" Margin="4"/>
-    <StackPanel Orientation="Horizontal">
-      <TextBlock Text="Width" VerticalAlignment="Center" Margin="4"/>
-      <NumericUpDown Value="{Binding Width}" Minimum="{Binding Capabilities.MinWidth}" Maximum="{Binding Capabilities.MaxWidth}" Margin="4"/>
-      <TextBlock Text="Height" VerticalAlignment="Center" Margin="4"/>
-      <NumericUpDown Value="{Binding Height}" Minimum="{Binding Capabilities.MinHeight}" Maximum="{Binding Capabilities.MaxHeight}" Margin="4"/>
-      <TextBlock Text="X Offset" VerticalAlignment="Center" Margin="4"/>
-      <NumericUpDown Value="{Binding XOffset}" Margin="4"/>
-      <TextBlock Text="Y Offset" VerticalAlignment="Center" Margin="4"/>
-      <NumericUpDown Value="{Binding YOffset}" Margin="4"/>
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Right">
+      <TextBlock Text="Preview"/>
+      <Border BorderBrush="Black" BorderThickness="2" Padding="4">
+        <Image Source="{Binding PreviewImage}" Width="250" Height="350"/>
+      </Border>
     </StackPanel>
-    <Button Content="Scan" Command="{Binding Scan}" Margin="4"/>
-  </StackPanel>
+    <StackPanel>
+      <TextBlock Text="Path" Margin="4"/>
+      <TextBox Text="{Binding OutputPath}" Margin="4"/>
+      <TextBlock Text="Document format" Margin="4"/>
+      <DropDown Items="{Binding Capabilities.DocumentFormatExtensions}" SelectedItem="{Binding DocumentFormatExt}" Margin="4"/>
+      <TextBlock Text="Resolution" Margin="4"/>
+      <DropDown Items="{Binding Capabilities.Resolutions}" SelectedItem="{Binding Resolution}" Margin="4"/>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="Width" VerticalAlignment="Center" Margin="4" Width="50"/>
+        <NumericUpDown Value="{Binding Width}" Minimum="{Binding Capabilities.MinWidth}" Maximum="{Binding Capabilities.MaxWidth}" Margin="4" Width="100"/>
+        <TextBlock Text="Height" VerticalAlignment="Center" Margin="4" Width="50"/>
+        <NumericUpDown Value="{Binding Height}" Minimum="{Binding Capabilities.MinHeight}" Maximum="{Binding Capabilities.MaxHeight}" Margin="4" Width="100"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="X Offset" VerticalAlignment="Center" Margin="4" Width="50"/>
+        <NumericUpDown Value="{Binding XOffset}" Margin="4" Width="100"/>
+        <TextBlock Text="Y Offset" VerticalAlignment="Center" Margin="4" Width="50"/>
+        <NumericUpDown Value="{Binding YOffset}" Margin="4" Width="100"/>
+      </StackPanel>
+      <Button Content="Preview" Command="{Binding PreviewAsync}" Margin="4"/>
+      <Button Content="Scan" Command="{Binding Scan}" Margin="4"/>
+    </StackPanel>
+  </DockPanel>
 </UserControl>

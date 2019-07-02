@@ -16,11 +16,16 @@ namespace Escl.Jobs
             this.endpoint = string.Format(RESULT_URI_PATTERN, host, jobUri);
         }
 
+        public async Task<Stream> GetStreamAsync()
+        {
+            return await esclClient.GetStreamAsync(endpoint);
+        }
+
         public async Task SaveToFile(string path)
         {
             using(var file = new FileStream(path, FileMode.Create))
             {
-                using (var resultStream = await esclClient.GetStreamAsync(endpoint))
+                using (var resultStream = await GetStreamAsync())
                 {
                     resultStream.CopyTo(file);
                 }
